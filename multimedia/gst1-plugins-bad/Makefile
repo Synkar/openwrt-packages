@@ -230,7 +230,8 @@ MESON_ARGS += \
 	-Dsoundtouch=disabled \
 	-Dspandsp=disabled \
 	$(call GST_COND_SELECT,srt) \
-	-Dsrtp=disabled \
+	$(call GST_COND_SELECT,srtp) \
+	$(call GST_COND_SELECT,sctp) \
 	-Dteletext=disabled \
 	-Dtinyalsa=disabled \
 	-Dttml=disabled \
@@ -241,7 +242,7 @@ MESON_ARGS += \
 	-Dwasapi=disabled \
 	-Dwasapi2=disabled \
 	$(call GST_COND_SELECT,webp) \
-	-Dwebrtc=disabled \
+	$(call GST_COND_SELECT,webrtc) \
 	-Dwebrtcdsp=disabled \
 	-Dwildmidi=disabled \
 	-Dwinks=disabled \
@@ -338,6 +339,9 @@ $(eval $(call GstBuildLibrary,play,play,,))
 $(eval $(call GstBuildLibrary,player,player,play,))
 $(eval $(call GstBuildLibrary,uridownloader,uridownloader,,))
 $(eval $(call GstBuildLibrary,transcoder,transcoder,,))
+$(eval $(call GstBuildLibrary,sctp,sctp,,))
+$(eval $(call GstBuildLibrary,webrtc,webrtc,sdp,))
+$(eval $(call GstBuildLibrary,webrtcnice,WebRTC nice,webrtc,+libnice))
 
 # 1: short name
 # 2: description
@@ -448,9 +452,12 @@ $(eval $(call GstBuildPlugin,sbc,sbc support,audio,,+sbc))
 $(eval $(call GstBuildPlugin,shm,POSIX shared memory source and sink,,,+librt))
 $(eval $(call GstBuildPlugin,sndfile,sndfile support,audio,,+libsndfile))
 $(eval $(call GstBuildPlugin,srt,srt support,,,+srt))
-#$(eval $(call GstBuildPlugin,srtp,srtp support,rtp,,+libsrtp))
+$(eval $(call GstBuildPlugin,sctp,SCTP support,sctp,,))
+$(eval $(call GstBuildPlugin,srtp,srtp support,rtp,,+libsrtp2))
 $(eval $(call GstBuildPlugin,webp,webp support,,,+libwebp))
 #$(eval $(call GstBuildPlugin,yadif,yadif support,,,))
+
+$(eval $(call GstBuildPlugin,webrtc,WebRTC support,rtp sdp app webrtcnice sctp,sctp,+libnice))
 
 $(eval $(call BuildPackage,gstreamer1-plugins-bad))
 $(eval $(call BuildPackage,gst1-plugins-bad))
