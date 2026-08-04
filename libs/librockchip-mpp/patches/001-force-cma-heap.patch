@@ -1,0 +1,25 @@
+--- a/osal/allocator/allocator_dma_heap.c
++++ b/osal/allocator/allocator_dma_heap.c
+@@ -63,14 +63,14 @@
+ } DmaHeapInfo;
+ 
+ static DmaHeapInfo heap_infos[MPP_ALLOC_FLAG_TYPE_NB] = {
+-    {   "system-uncached",          -1,                                                MPP_ALLOC_FLAG_NONE , },   /* 0 */
+-    {   "system-uncached-dma32",    -1,                                                MPP_ALLOC_FLAG_DMA32, },   /* 1 */
+-    {   "system",                   -1,                      MPP_ALLOC_FLAG_CACHABLE                       , },   /* 2 */
+-    {   "system-dma32",             -1,                      MPP_ALLOC_FLAG_CACHABLE | MPP_ALLOC_FLAG_DMA32, },   /* 3 */
+-    {   "cma-uncached",             -1, MPP_ALLOC_FLAG_CMA                                                 , },   /* 4 */
+-    {   "cma-uncached-dma32",       -1, MPP_ALLOC_FLAG_CMA                           | MPP_ALLOC_FLAG_DMA32, },   /* 5 */
+-    {   "cma",                      -1, MPP_ALLOC_FLAG_CMA | MPP_ALLOC_FLAG_CACHABLE                       , },   /* 6 */
+-    {   "cma-dma32",                -1, MPP_ALLOC_FLAG_CMA | MPP_ALLOC_FLAG_CACHABLE | MPP_ALLOC_FLAG_DMA32, },   /* 7 */
++    {   "default_cma_region",          -1,                                                MPP_ALLOC_FLAG_NONE , },   /* 0 */
++    {   "default_cma_region",    -1,                                                MPP_ALLOC_FLAG_DMA32, },   /* 1 */
++    {   "default_cma_region",                   -1,                      MPP_ALLOC_FLAG_CACHABLE                       , },   /* 2 */
++    {   "default_cma_region",             -1,                      MPP_ALLOC_FLAG_CACHABLE | MPP_ALLOC_FLAG_DMA32, },   /* 3 */
++    {   "default_cma_region",             -1, MPP_ALLOC_FLAG_CMA                                                 , },   /* 4 */
++    {   "default_cma_region",       -1, MPP_ALLOC_FLAG_CMA                           | MPP_ALLOC_FLAG_DMA32, },   /* 5 */
++    {   "default_cma_region",                      -1, MPP_ALLOC_FLAG_CMA | MPP_ALLOC_FLAG_CACHABLE                       , },   /* 6 */
++    {   "default_cma_region",                -1, MPP_ALLOC_FLAG_CMA | MPP_ALLOC_FLAG_CACHABLE | MPP_ALLOC_FLAG_DMA32, },   /* 7 */
+ };
+ 
+ static int try_open_path(const char *name)
