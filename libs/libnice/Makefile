@@ -30,7 +30,7 @@ define Package/libnice
   CATEGORY:=Libraries
   TITLE:=GLib ICE (Interactive Connectivity Establishment) library
   URL:=https://libnice.freedesktop.org/
-  DEPENDS:=+glib2 +libgnutls +libtasn1
+  DEPENDS:=+glib2 +libgnutls +libtasn1 +libgstreamer1
   ABI_VERSION:=10
 endef
 
@@ -43,7 +43,7 @@ endef
 MESON_ARGS += \
 	-Dcrypto-library=gnutls \
 	-Dgupnp=disabled \
-	-Dgstreamer=disabled \
+	-Dgstreamer=enabled \
 	-Dintrospection=disabled \
 	-Dtests=disabled \
 	-Dexamples=disabled \
@@ -61,6 +61,8 @@ endef
 define Package/libnice/install
 	$(INSTALL_DIR) $(1)/usr/lib
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libnice.so.$(ABI_VERSION)* $(1)/usr/lib/
+	$(INSTALL_DIR) $(1)/usr/lib/gstreamer-1.0
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/gstreamer-1.0/libgstnice.so $(1)/usr/lib/gstreamer-1.0/
 endef
 
 $(eval $(call BuildPackage,libnice))
