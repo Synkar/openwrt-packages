@@ -1,0 +1,22 @@
+--- a/mpp/hal/vpu/vp8e/hal_vp8e_entropy.c
++++ b/mpp/hal/vpu/vp8e/hal_vp8e_entropy.c
+@@ -20,14 +20,17 @@
+ static RK_U32 calc_mvprob(RK_U32 left, RK_U32 right, RK_U32 prob)
+ {
+     RK_U32 p;
++    RK_U32 total = left + right;
+ 
+-    if (left + right) {
+-        p = (left * 255) / (left + right);
++    if (total && total >= left && total >= right) {
++        p = (left * 255) / total;
+         p &= -2;
+         if (!p)
+             p = 1;
++        if (p > 255)
++            p = 255;
+     } else
+         p = prob;
+ 
+     return p;
+ }
