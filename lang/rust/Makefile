@@ -47,6 +47,8 @@ endef
 # Rust-lang has an uninstall script
 RUST_UNINSTALL:=$(STAGING_DIR)/host/lib/rustlib/uninstall.sh
 
+RUST_BUILD_JOBS ?= 4
+
 # Target Flags
 TARGET_CONFIGURE_ARGS = \
 	--set=target.$(RUSTC_TARGET_ARCH).ar=$(TARGET_AR) \
@@ -91,6 +93,7 @@ define Host/Compile
 	TARGET_CFLAGS="$(TARGET_CFLAGS)" \
 	$(PYTHON) $(HOST_BUILD_DIR)/x.py \
 		--build-dir $(HOST_BUILD_DIR)/build \
+		-j $(RUST_BUILD_JOBS) \
 		dist build-manifest rustc rust-std cargo llvm-tools rust-src
 endef
 
