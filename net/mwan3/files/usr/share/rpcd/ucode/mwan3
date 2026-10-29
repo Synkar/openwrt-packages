@@ -42,7 +42,7 @@ function ucibool(val) {
 }
 
 function get_mwan3track_status(iface, uci_track_ips, procd) {
-	if (length(uci_track_ips) == 0) {
+	if (length(uci_track_ips ?? []) == 0) {
 		return 'disabled';
 	}
 	if (procd?.[sprintf('track_%s', iface)]?.running) {
@@ -145,7 +145,7 @@ function interfaces_status(request) {
 			'score': get_int(ifname, 'SCORE'),
 			'lost': get_int(ifname, 'LOST'),
 			'turn': get_int(ifname, 'TURN'),
-			'status': get_str(ifname, 'STATUS') || 'unknown',
+			'status': get_str(ifname, 'STATUS') || (length(uci_track_ips ?? []) ? 'unknown' : 'notracking'),
 			'enabled': ucibool(intf['enabled']),
 			'running': track_status == 'active',
 			'tracking': track_status,
